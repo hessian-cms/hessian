@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "author": "no4any",
   "license": "MIT",
+  "main": "dist/index.js",
   "scripts": {
     "start": "",
     "build": "tsc --project tsconfig.build.json",
