@@ -9,5 +9,6 @@
     "packages/*"
   ],
   "scripts": {
+    "test": "npm run --workspaces test"
    }
 }
