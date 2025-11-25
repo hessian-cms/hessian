@@ -9,6 +9,7 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "npm run --workspaces test"
+    "test": "npm run --workspaces test",
+    "test:coverage": "npm run --workspaces test:coverage"
    }
 }
