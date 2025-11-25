@@ -1,4 +1,4 @@
-import { existsSync, rm, rmSync } from "node:fs";
+import { existsSync, rmSync } from "node:fs";
 import { NDJson } from "../src";
 
 const OBJ_1 = { a: 1, b: 1 };
