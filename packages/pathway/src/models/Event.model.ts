@@ -1,14 +1,12 @@
 import z from "zod";
+import { WithId } from "./WithId.model";
 
 export const Event = z.object({
     id: z.string(),
     time: z.number(),
     message: z.string(),
-    create: z.array(z.object()).optional(),
-    update: z.array(z.object({
-        id: z.string(),
-        update: z.object()
-    })).optional(),
+    create: z.record(z.string(), WithId).optional(),
+    update: z.record(z.string(), WithId).optional(),
     delete: z.array(z.string()).optional()
 })
 

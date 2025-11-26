@@ -5,19 +5,47 @@ const NON_MATCHING_EVENT = {
     id: 1
 }
 
-const MATCHING_EVENT: Event = {
+const MATCHING_EVENT_1: Event = {
     id: "event-1",
     time: Date.now(),
     message: "This is a test event",
-    create: [],
-    update: [],
+    create: {
+        itemA: { id: "itemA" },
+        itemB: { id: "itemB" }
+    },
+    update: {},
     delete: []
+}
+
+const MATCHING_EVENT_2: Event = {
+    id: "event-2",
+    time: Date.now(),
+    message: "This is a test event",
+    create: {
+        itemC: { id: "itemC" },
+    },
+    update: {
+        itemA: { 
+            id: "itemA",
+            msg: "Hello World!!!"
+        }
+    },
+    delete: []
+}
+
+const MATCHING_EVENT_3: Event = {
+    id: "event-3",
+    time: Date.now(),
+    message: "This is a test event",
+    create: {},
+    update: {},
+    delete: ["itemB"]
 }
 
 describe("Test Event model", () => {
     test("Test matching event", async () => {
         expect(1);
-        expect(Event.parseAsync(MATCHING_EVENT)).resolves.toEqual(MATCHING_EVENT);
+        expect(Event.parseAsync(MATCHING_EVENT_1)).resolves.toEqual(MATCHING_EVENT_1);
     })
 
     test("Test non matching event", async () => {

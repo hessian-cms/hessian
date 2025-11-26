@@ -1,24 +1,48 @@
+import { NDJson } from "../dist";
+import { Event, WithId } from "./models";
+
 type Walker = (obj: Object) => boolean;
 
 export default class Pathway {
-    private trails: Object[] = [];
-    constructor(private path: string) { }
-
-    append(obj: Object) {
-        this.trails.push(obj);
+    private constructor(private path: string, private state: Map<string, WithId>, ndjson: NDJson<Event>) {
     }
 
-    walk(callback: Walker) {
-        for (const trail of this.trails) {
-            callback(trail);
-        }
+    public static async getInstance(path: string): Promise<Pathway> {
+        const ndjson = new NDJson<Event>(path);
+        const state = await Pathway.build(path, ndjson);
+        return new Pathway(path, state, ndjson);
     }
 
-    getCurrentVersion() {
-        return this.trails.length;
+    private static async build(path: string, ndjson: NDJson<Event>): Promise<Map<string, WithId>> {
+        const state = new Map<string, WithId>();
+
+        await ndjson.walkJsons(async (evnt: Event) => {
+            if (evnt.create) {
+                Object.entries(evnt.create).forEach(create => {
+                    state.set(create[0], create[1]);
+                });
+            }
+            if (evnt.update) {
+                Object.entries(evnt.update).forEach(update => {
+                    const current = state.get(update[0]);
+                    if (current) {
+                        state.set(update[0], {
+                            ...current,
+                            ...update[1]
+                        })
+                    }
+                });
+            }
+            if (evnt.delete) {
+                evnt.delete.forEach(id => {
+                    state.delete(id);
+                })
+            };
+        })
+        return state;
     }
 
-    getTrails() {
-        return this.trails;
+    public async getState(): Promise<any> {
+        return Object.fromEntries(this.state);
     }
 }

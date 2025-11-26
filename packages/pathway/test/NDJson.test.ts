@@ -5,7 +5,7 @@ const OBJ_1 = { a: 1, b: 1 };
 const OBJ_2 = { a: 2, b: 2 };
 const OBJ_3 = { a: 3, b: 3 };
 
-const FILE = "dump/ndjson-test.ndjson";
+const FILE = "ndjson-test.ndjson";
 
 describe("NDJson test cases", () => {
     beforeEach(async () => {
