@@ -9,7 +9,7 @@ export class NDJson<T> {
     public constructor(private filePath: string) { }
 
     private async readFile() {
-        const fh = await open(this.filePath, "r");
+        const fh = await open(this.filePath, "a+");
         const fileContent = await fh.readFile(FILE_ENCODING);
         await fh.close();
         return fileContent;
