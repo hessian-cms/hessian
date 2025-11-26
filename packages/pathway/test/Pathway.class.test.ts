@@ -1,4 +1,4 @@
-import { NDJson } from "../dist";
+import { NDJson } from "../src";
 import Pathway, { Event } from "../src";
 
 const FILE = "ndjson-test.ndjson";

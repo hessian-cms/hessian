@@ -1,4 +1,4 @@
-import { NDJson } from "../dist";
+import { NDJson } from "../src";
 import { Event, WithId } from "./models";
 
 type Walker = (obj: Object) => boolean;
