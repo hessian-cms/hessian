@@ -3,14 +3,14 @@ import { Event, WithId } from "./models";
 
 type Walker = (obj: Object) => boolean;
 
-export default class Pathway {
+export default class Ichabod {
     private constructor(private path: string, private state: Map<string, WithId>, ndjson: NDJson<Event>) {
     }
 
-    public static async getInstance(path: string): Promise<Pathway> {
+    public static async getInstance(path: string): Promise<Ichabod> {
         const ndjson = new NDJson<Event>(path);
-        const state = await Pathway.build(path, ndjson);
-        return new Pathway(path, state, ndjson);
+        const state = await Ichabod.build(path, ndjson);
+        return new Ichabod(path, state, ndjson);
     }
 
     private static async build(path: string, ndjson: NDJson<Event>): Promise<Map<string, WithId>> {

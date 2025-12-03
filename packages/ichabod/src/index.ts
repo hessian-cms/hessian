@@ -1,6 +1,6 @@
 export * from "./ndjson";
 export * from "./errors";
 export * from "./models";
-import Pathway from "./Pathway.class";
+import Ichabod from "./Ichabod.class";
 
-export default Pathway;
+export default Ichabod;

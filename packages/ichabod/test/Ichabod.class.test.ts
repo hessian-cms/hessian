@@ -1,5 +1,5 @@
 import { NDJson } from "../src";
-import Pathway, { Event } from "../src";
+import Ichabod, { Event } from "../src";
 
 const FILE = "ndjson-test.ndjson";
 
@@ -56,7 +56,7 @@ describe("Pathway class tests", () => {
         await ndjson.appendJson(MATCHING_EVENT_1);
         await ndjson.appendJson(MATCHING_EVENT_2);
         await ndjson.appendJson(MATCHING_EVENT_3);
-        const pathway = await Pathway.getInstance(FILE);
+        const pathway = await Ichabod.getInstance(FILE);
         expect(true).toBe(true);
     })
 })

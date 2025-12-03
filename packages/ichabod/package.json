@@ -1,5 +1,5 @@
 {
-  "name": "@hessian-cms/pathway",
+  "name": "@hessian-cms/ichabod",
   "version": "1.0.0",
   "description": "A event sourcing library for tracking audit trail",
   "main": "dist/index.js",
