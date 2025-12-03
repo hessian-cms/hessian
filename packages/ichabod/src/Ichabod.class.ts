@@ -42,7 +42,7 @@ export default class Ichabod {
         return state;
     }
 
-    public async getState(): Promise<any> {
-        return Object.fromEntries(this.state);
+    public async getState() {
+        return this.state;
     }
 }
