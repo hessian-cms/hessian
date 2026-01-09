@@ -53,9 +53,9 @@ describe("Ichabod class tests", () => {
     test("Ichabod state build", async () => {
         expect(1);
         const ndjson = new NDJson<Event>(FILE);
-        await ndjson.appendJson(MATCHING_EVENT_1);
-        await ndjson.appendJson(MATCHING_EVENT_2);
-        await ndjson.appendJson(MATCHING_EVENT_3);
+        await ndjson.append(MATCHING_EVENT_1);
+        await ndjson.append(MATCHING_EVENT_2);
+        await ndjson.append(MATCHING_EVENT_3);
         const ichabod = await Ichabod.getInstance(FILE);
         const state = await ichabod.getState();
         expect(state.get('itemA')?.msg).toBe("Hello World!!!");

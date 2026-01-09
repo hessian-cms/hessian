@@ -1,0 +1,1 @@
+export type AsyncObjectCallback<T> = (obj: T) => Promise<void>;

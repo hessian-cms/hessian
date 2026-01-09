@@ -16,7 +16,7 @@ export default class Ichabod {
     private static async build(path: string, ndjson: NDJson<Event>): Promise<Map<string, WithId>> {
         const state = new Map<string, WithId>();
 
-        await ndjson.walkJsons(async (evnt: Event) => {
+        await ndjson.walk(async (evnt: Event) => {
             if (evnt.create) {
                 Object.entries(evnt.create).forEach(create => {
                     state.set(create[0], create[1]);

@@ -1,4 +1,4 @@
-export * from "./ndjson";
+export * from "./trailStorage";
 export * from "./errors";
 export * from "./models";
 import Ichabod from "./Ichabod.class";
