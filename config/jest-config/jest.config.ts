@@ -1,9 +1,13 @@
-const { createDefaultPreset } = require("ts-jest");
+/** @jest-config-loader ts-node */
+// or
+/** @jest-config-loader esbuild-register */
+
+import { createDefaultPreset } from "ts-jest";
+import type { Config } from "jest";
 
 const tsJestTransformCfg = createDefaultPreset().transform;
 
-/** @type {import("jest").Config} **/
-module.exports = {
+const JestConfig: Config = {
   testEnvironment: "node",
   coverageThreshold: {
     global: {
@@ -16,4 +20,6 @@ module.exports = {
   transform: {
     ...tsJestTransformCfg,
   },
-};
+}
+
+export default JestConfig;
