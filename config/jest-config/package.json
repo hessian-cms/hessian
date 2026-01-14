@@ -6,7 +6,6 @@
   "author": "",
   "type": "module",
   "exports": {
-    ".": "./jest.config.ts",
     "./js": "./jest.config.js"
   },
   "devDependencies": {
