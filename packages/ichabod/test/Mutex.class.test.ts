@@ -1,9 +1,7 @@
 import { Mutex } from "../src/Mutex.class";
 
 const wait = (time: number) => {
-    console.log(`Waiting for ${time}ms`);
     return new Promise<void>(resolve => setTimeout(() => {
-        console.log(time);
         resolve();
     }, time));
 }
