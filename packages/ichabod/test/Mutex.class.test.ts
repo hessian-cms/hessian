@@ -1,23 +1,27 @@
+import { AsyncObjectCallback } from "../dist";
 import { Mutex } from "../src/helpers/Mutex.class";
 
-const wait = (time: number) => {
+const executeAfterTime = (time: number, func: () => void) => {
     return new Promise<void>(resolve => setTimeout(() => {
+        func();
         resolve();
     }, time));
 }
 
 const mutex = new Mutex();
 
-const mutexedWait = mutex.lock(wait);
+const mutexedExectuteAfterTime = mutex.lock(executeAfterTime);
 
 describe("Mutex class", () => {
     test("Testing", async () => {
         expect(1);
 
-        await mutexedWait(1000);
-        await mutexedWait(2000);
-        await mutexedWait(1000);
+        const arr: number[] = [];
 
-        expect(1 + 1).toBe(2);
+        mutexedExectuteAfterTime(500, () => { arr.push(1); });
+        mutexedExectuteAfterTime(250, () => { arr.push(2); });
+        await mutexedExectuteAfterTime(125, () => { arr.push(3); });
+
+        expect(arr).toEqual([1, 2, 3]);
     })
 })

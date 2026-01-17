@@ -1,5 +1,4 @@
 import { TrailStorage } from "./TrailStorage.abstract.class";
-
 export class InMemoryTrailStorage<T> extends TrailStorage<T> {
     private storage = new Array<T>();
 
