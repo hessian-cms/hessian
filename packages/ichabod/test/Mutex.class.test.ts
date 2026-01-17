@@ -1,4 +1,4 @@
-import { Mutex } from "../src/Mutex.class";
+import { Mutex } from "../src/helpers/Mutex.class";
 
 const wait = (time: number) => {
     return new Promise<void>(resolve => setTimeout(() => {
