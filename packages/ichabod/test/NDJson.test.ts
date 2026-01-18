@@ -1,23 +1,20 @@
-import { existsSync, rmSync } from "node:fs";
 import { NDJsonTrailStorage } from "../src/trailStorage";
+import { deleteTestingFolder } from "./lib/deleteFolderIfExists.function";
+import { TEST_FOLDER } from "./lib/props";
 
 const OBJ_1 = { a: 1, b: 1 };
 const OBJ_2 = { a: 2, b: 2 };
 const OBJ_3 = { a: 3, b: 3 };
 
-const FILE = "ndjson-test.ndjson";
+const FILE = `${TEST_FOLDER}/ndjson-test.ndjson`;
 
 describe("NDJson test cases", () => {
-    beforeEach(async () => {
-        if (existsSync(FILE)) {
-            rmSync(FILE);
-        }
-    });
+    beforeAll(() => {
+        deleteTestingFolder();
+    })
 
-    afterEach(async () => {
-        if (existsSync(FILE)) {
-            rmSync(FILE);
-        }
+    afterAll(() => {
+        deleteTestingFolder();
     })
 
     test("Create and append 3 objects", async () => {

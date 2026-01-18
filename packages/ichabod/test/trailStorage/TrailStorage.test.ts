@@ -1,26 +1,26 @@
 import { InMemoryTrailStorage, NDJsonTrailStorage, TrailStorage } from "../../src";
-import { unlinkSync } from "fs";
+import { existsSync, rmSync } from "fs";
+import { TEST_FOLDER } from "../lib/props";
+import { deleteTestingFolder } from "../lib/deleteFolderIfExists.function";
 
 const OBJ_1 = { a: 1, b: 1 };
 const OBJ_2 = { a: 2, b: 2 };
 const OBJ_3 = { a: 3, b: 3 };
 
-const FILE_NAME = "test_trail_storage.ndjson";
-
-function deleteFileIfExists(filePath: string) {
-    try {
-        unlinkSync(FILE_NAME);
-    } catch (e) { }
-}
+const FILE_PATH = `${TEST_FOLDER}/test_trail_storage.ndjson`;
 
 describe("TrailStorage test cases", () => {
     beforeAll(() => {
-        deleteFileIfExists(FILE_NAME);
+        deleteTestingFolder();
+    })
+
+    afterAll(() => {
+        deleteTestingFolder();
     })
 
     const storages: { name: string, storage: TrailStorage<any> }[] = [
         { name: "InMemoryTrailStorage", storage: new InMemoryTrailStorage<any>() },
-        { name: "NDJsonTrailStorage", storage: new NDJsonTrailStorage<any>(FILE_NAME) }
+        { name: "NDJsonTrailStorage", storage: new NDJsonTrailStorage<any>(FILE_PATH) }
     ];
 
     storages.forEach(({ name, storage }) => {
@@ -44,8 +44,4 @@ describe("TrailStorage test cases", () => {
             expect(count).toBe(3);
         });
     });
-
-    afterAll(() => {
-        deleteFileIfExists
-    })
 });

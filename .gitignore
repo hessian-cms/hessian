@@ -138,3 +138,6 @@ dump
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Folders for testing
+test_folder
