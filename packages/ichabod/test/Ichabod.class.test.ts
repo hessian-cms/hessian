@@ -1,5 +1,4 @@
-import { NDJson } from "../src";
-import Ichabod, { Event } from "../src";
+import Ichabod, { Event, NDJsonTrailStorage } from "../src";
 
 const FILE = "ndjson-test.ndjson";
 
@@ -52,7 +51,7 @@ const MATCHING_EVENT_3: Event = {
 describe("Ichabod class tests", () => {
     test("Ichabod state build", async () => {
         expect(1);
-        const ndjson = new NDJson<Event>(FILE);
+        const ndjson = new NDJsonTrailStorage<Event>(FILE);
         await ndjson.append(MATCHING_EVENT_1);
         await ndjson.append(MATCHING_EVENT_2);
         await ndjson.append(MATCHING_EVENT_3);

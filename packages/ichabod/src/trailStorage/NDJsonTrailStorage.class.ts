@@ -5,7 +5,7 @@ import { TrailStorage } from "./TrailStorage.abstract.class";
 const FILE_ENCODING = "utf-8";
 const NEWLINE = "\n";
 
-export class NDJson<T> extends TrailStorage<T> {
+export class NDJsonTrailStorage<T> extends TrailStorage<T> {
     public constructor(private filePath: string) {
         super();
     }

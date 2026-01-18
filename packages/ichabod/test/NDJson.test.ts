@@ -1,5 +1,5 @@
 import { existsSync, rmSync } from "node:fs";
-import { NDJson } from "../src/trailStorage";
+import { NDJsonTrailStorage } from "../src/trailStorage";
 
 const OBJ_1 = { a: 1, b: 1 };
 const OBJ_2 = { a: 2, b: 2 };
@@ -22,7 +22,7 @@ describe("NDJson test cases", () => {
 
     test("Create and append 3 objects", async () => {
         expect(3);
-        const ndjson = new NDJson<any>(FILE);
+        const ndjson = new NDJsonTrailStorage<any>(FILE);
         await ndjson.append(OBJ_1);
         await ndjson.append(OBJ_2);
         await ndjson.append(OBJ_3);
@@ -34,7 +34,7 @@ describe("NDJson test cases", () => {
 
     test("Create and walk 3 objects", async () => {
         expect(1);
-        const ndjson = new NDJson(FILE);
+        const ndjson = new NDJsonTrailStorage<any>(FILE);
         await ndjson.append(OBJ_1);
         await ndjson.append(OBJ_2);
         await ndjson.append(OBJ_3);

@@ -1,19 +1,19 @@
-import { NDJson } from "../src";
 import { Event, WithId } from "./models";
+import { NDJsonTrailStorage } from "./trailStorage";
 
 type Walker = (obj: Object) => boolean;
 
 export default class Ichabod {
-    private constructor(private path: string, private state: Map<string, WithId>, ndjson: NDJson<Event>) {
+    private constructor(private path: string, private state: Map<string, WithId>, ndjson: NDJsonTrailStorage<Event>) {
     }
 
     public static async getInstance(path: string): Promise<Ichabod> {
-        const ndjson = new NDJson<Event>(path);
+        const ndjson = new NDJsonTrailStorage<Event>(path);
         const state = await Ichabod.build(path, ndjson);
         return new Ichabod(path, state, ndjson);
     }
 
-    private static async build(path: string, ndjson: NDJson<Event>): Promise<Map<string, WithId>> {
+    private static async build(path: string, ndjson: NDJsonTrailStorage<Event>): Promise<Map<string, WithId>> {
         const state = new Map<string, WithId>();
 
         await ndjson.walk(async (evnt: Event) => {
