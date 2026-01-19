@@ -1,45 +1,39 @@
 import { Event, WithId } from "./models";
-import { NDJsonTrailStorage } from "./trailStorage";
-
-type Walker = (obj: Object) => boolean;
+import { TrailStorage } from "./trailStorage";
 
 export default class Ichabod {
-    private constructor(private path: string, private state: Map<string, WithId>, ndjson: NDJsonTrailStorage<Event>) {
+    private state: Map<string, WithId> = new Map<string, WithId>();
+
+    private constructor(private trailStorage: TrailStorage<Event>) { }
+
+    public static async getInstance(trailStorage: TrailStorage<Event>): Promise<Ichabod> {
+        const ichabod = new Ichabod(trailStorage);
+        await ichabod.build();
+        return ichabod;
     }
 
-    public static async getInstance(path: string): Promise<Ichabod> {
-        const ndjson = new NDJsonTrailStorage<Event>(path);
-        const state = await Ichabod.build(path, ndjson);
-        return new Ichabod(path, state, ndjson);
-    }
-
-    private static async build(path: string, ndjson: NDJsonTrailStorage<Event>): Promise<Map<string, WithId>> {
-        const state = new Map<string, WithId>();
-
-        await ndjson.walk(async (evnt: Event) => {
+    private async build(): Promise<void> {
+        await this.trailStorage.walk(async (evnt: Event) => {
             if (evnt.create) {
-                Object.entries(evnt.create).forEach(create => {
-                    state.set(create[0], create[1]);
+                evnt.create.forEach(item => {
+                    if (!this.state.has(item.id)) {
+                        this.state.set(item.id, { ...item });
+                    }
                 });
             }
             if (evnt.update) {
-                Object.entries(evnt.update).forEach(update => {
-                    const current = state.get(update[0]);
-                    if (current) {
-                        state.set(update[0], {
-                            ...current,
-                            ...update[1]
-                        })
+                evnt.update?.forEach(item => {
+                    if (this.state.has(item.id)) {
+                        this.state.set(item.id, { ...item })
                     }
                 });
             }
             if (evnt.delete) {
-                evnt.delete.forEach(id => {
-                    state.delete(id);
+                evnt.delete?.forEach(id => {
+                    this.state.delete(id);
                 })
             };
-        })
-        return state;
+        });
     }
 
     public async getState() {

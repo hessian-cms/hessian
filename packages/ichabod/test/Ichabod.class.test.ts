@@ -1,62 +1,79 @@
-import Ichabod, { Event, NDJsonTrailStorage } from "../src";
-
-const FILE = "ndjson-test.ndjson";
+import Ichabod, { Event, InMemoryTrailStorage, NDJsonTrailStorage } from "../src";
+import { deleteTestingFolder } from "./lib/deleteFolderIfExists.function";
+import { TEST_FOLDER } from "./lib/props";
 
 const MATCHING_EVENT_1: Event = {
     id: "event-1",
     time: Date.now(),
     message: "This is a test event",
-    create: {
-        itemA: { id: "itemA" },
-        itemB: { id: "itemB" }
-    },
-    update: {},
-    delete: []
+    create: [
+        { id: "itemA" },
+        { id: "itemB" }
+    ]
 }
 
 const MATCHING_EVENT_2: Event = {
     id: "event-2",
     time: Date.now(),
     message: "This is a test event",
-    create: {
-        itemC: { id: "itemC" },
-        itemD: { 
+    create: [
+        { id: "itemC" },
+        {
             id: "itemD",
             msg: "To be removed"
-         }
-    },
-    update: {
-        itemA: { 
+        }
+    ],
+    update: [
+        {
             id: "itemA",
             msg: "Hello World!!!"
         }
-    },
-    delete: []
+    ]
 }
 
 const MATCHING_EVENT_3: Event = {
     id: "event-3",
     time: Date.now(),
     message: "This is a test event",
-    create: {},
-    update: {
-        itemD: { 
+    update: [
+        {
             id: "itemD",
             msg: null
         }
-    },
+    ],
     delete: ["itemB"]
 }
 
+const FILE_PATH = `${TEST_FOLDER}/test_ichabod.ndjson`;
+
 describe("Ichabod class tests", () => {
-    test("Ichabod state build", async () => {
+    beforeAll(() => {
+        deleteTestingFolder();
+    })
+
+    afterAll(() => {
+        deleteTestingFolder();
+    });
+
+    test(`Ichabod state build with NDJsonTrailStorage`, async () => {
         expect(1);
-        const ndjson = new NDJsonTrailStorage<Event>(FILE);
-        await ndjson.append(MATCHING_EVENT_1);
-        await ndjson.append(MATCHING_EVENT_2);
-        await ndjson.append(MATCHING_EVENT_3);
-        const ichabod = await Ichabod.getInstance(FILE);
+        const storage = new NDJsonTrailStorage<Event>(FILE_PATH);
+        await storage.append(MATCHING_EVENT_1);
+        await storage.append(MATCHING_EVENT_2);
+        await storage.append(MATCHING_EVENT_3);
+        const ichabod = await Ichabod.getInstance(storage);
         const state = await ichabod.getState();
-        expect(state.get('itemA')?.msg).toBe("Hello World!!!");
+        expect(state.get('itemA')?.msg).toEqual("Hello World!!!");
+    })
+
+    test(`Ichabod state build with InMemoryTrailStorage`, async () => {
+        expect(1);
+        const storage = new InMemoryTrailStorage<Event>();
+        await storage.append(MATCHING_EVENT_1);
+        await storage.append(MATCHING_EVENT_2);
+        await storage.append(MATCHING_EVENT_3);
+        const ichabod = await Ichabod.getInstance(storage);
+        const state = await ichabod.getState();
+        expect(state.get('itemA')?.msg).toEqual("Hello World!!!");
     })
 })

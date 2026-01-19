@@ -1,4 +1,3 @@
-import { AsyncObjectCallback } from "../dist";
 import { Mutex } from "../src/helpers/Mutex.class";
 
 const executeAfterTime = (time: number, func: () => void) => {

@@ -9,11 +9,11 @@ const OBJ_3 = { a: 3, b: 3 };
 const FILE = `${TEST_FOLDER}/ndjson-test.ndjson`;
 
 describe("NDJson test cases", () => {
-    beforeAll(() => {
+    beforeEach(() => {
         deleteTestingFolder();
     })
 
-    afterAll(() => {
+    afterEach(() => {
         deleteTestingFolder();
     })
 
