@@ -17,6 +17,11 @@ const config = {
       statements: 50,
     }
   },
+  coveragePathIgnorePatterns: [
+    "/dist/",
+    "/test/",
+    "/node_modules/"
+  ],
   transform: {
     ...tsJestTransformCfg,
   },

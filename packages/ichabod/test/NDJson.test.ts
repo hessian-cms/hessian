@@ -1,25 +1,25 @@
 import { NDJsonTrailStorage } from "../src/trailStorage";
-import { deleteTestingFolder } from "./lib/deleteFolderIfExists.function";
+import { deleteIfExists } from "./lib/deleteIfExists.function";
 import { TEST_FOLDER } from "./lib/props";
 
 const OBJ_1 = { a: 1, b: 1 };
 const OBJ_2 = { a: 2, b: 2 };
 const OBJ_3 = { a: 3, b: 3 };
 
-const FILE = `${TEST_FOLDER}/ndjson-test.ndjson`;
+const FILE_PATH = `${TEST_FOLDER}/ndjson-test.ndjson`;
 
 describe("NDJson test cases", () => {
     beforeEach(() => {
-        deleteTestingFolder();
+        deleteIfExists(FILE_PATH);
     })
 
     afterEach(() => {
-        deleteTestingFolder();
+        deleteIfExists(FILE_PATH);
     })
 
     test("Create and append 3 objects", async () => {
         expect(3);
-        const ndjson = new NDJsonTrailStorage<any>(FILE);
+        const ndjson = new NDJsonTrailStorage<any>(FILE_PATH);
         await ndjson.append(OBJ_1);
         await ndjson.append(OBJ_2);
         await ndjson.append(OBJ_3);
@@ -31,7 +31,7 @@ describe("NDJson test cases", () => {
 
     test("Create and walk 3 objects", async () => {
         expect(1);
-        const ndjson = new NDJsonTrailStorage<any>(FILE);
+        const ndjson = new NDJsonTrailStorage<any>(FILE_PATH);
         await ndjson.append(OBJ_1);
         await ndjson.append(OBJ_2);
         await ndjson.append(OBJ_3);

@@ -1,5 +1,5 @@
 import Ichabod, { Event, InMemoryTrailStorage, NDJsonTrailStorage } from "../src";
-import { deleteTestingFolder } from "./lib/deleteFolderIfExists.function";
+import { deleteIfExists } from "./lib/deleteIfExists.function";
 import { TEST_FOLDER } from "./lib/props";
 
 const MATCHING_EVENT_1: Event = {
@@ -48,11 +48,11 @@ const FILE_PATH = `${TEST_FOLDER}/test_ichabod.ndjson`;
 
 describe("Ichabod class tests", () => {
     beforeAll(() => {
-        deleteTestingFolder();
+        deleteIfExists(FILE_PATH);
     })
 
     afterAll(() => {
-        deleteTestingFolder();
+        deleteIfExists(FILE_PATH);
     });
 
     test(`Ichabod state build with NDJsonTrailStorage`, async () => {

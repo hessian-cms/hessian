@@ -1,7 +1,7 @@
 import { InMemoryTrailStorage, NDJsonTrailStorage, TrailStorage } from "../../src";
 import { existsSync, rmSync } from "fs";
 import { TEST_FOLDER } from "../lib/props";
-import { deleteTestingFolder } from "../lib/deleteFolderIfExists.function";
+import { deleteIfExists } from "../lib/deleteIfExists.function";
 
 const OBJ_1 = { a: 1, b: 1 };
 const OBJ_2 = { a: 2, b: 2 };
@@ -11,11 +11,11 @@ const FILE_PATH = `${TEST_FOLDER}/test_trail_storage.ndjson`;
 
 describe("TrailStorage test cases", () => {
     beforeAll(() => {
-        deleteTestingFolder();
+        deleteIfExists(FILE_PATH);
     })
 
     afterAll(() => {
-        deleteTestingFolder();
+        deleteIfExists(FILE_PATH);
     })
 
     const storages: { name: string, storage: TrailStorage<any> }[] = [
