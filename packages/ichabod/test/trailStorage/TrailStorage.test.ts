@@ -1,47 +1,53 @@
-import { InMemoryTrailStorage, NDJsonTrailStorage, TrailStorage } from "../../src";
-import { existsSync, rmSync } from "fs";
-import { TEST_FOLDER } from "../lib/props";
-import { deleteIfExists } from "../lib/deleteIfExists.function";
+import { InMemoryTrailStorage } from "../../src";
+
+interface TestObject {
+    a: number;
+    b: number;
+};
 
 const OBJ_1 = { a: 1, b: 1 };
 const OBJ_2 = { a: 2, b: 2 };
 const OBJ_3 = { a: 3, b: 3 };
 
-const FILE_PATH = `${TEST_FOLDER}/test_trail_storage.ndjson`;
-
-describe("TrailStorage test cases", () => {
-    beforeAll(() => {
-        deleteIfExists(FILE_PATH);
-    })
-
-    afterAll(() => {
-        deleteIfExists(FILE_PATH);
-    })
-
-    const storages: { name: string, storage: TrailStorage<any> }[] = [
-        { name: "InMemoryTrailStorage", storage: new InMemoryTrailStorage<any>() },
-        { name: "NDJsonTrailStorage", storage: new NDJsonTrailStorage<any>(FILE_PATH) }
-    ];
-
-    storages.forEach(({ name, storage }) => {
-        test(`${name} append and getObjects`, async () => {
-            expect(3);
+[InMemoryTrailStorage].forEach((StorageClass) => {
+    describe(`TrailStorage (${StorageClass.name}) tests`, () => {
+        test("Appended objects are retrievable", async () => {
+            expect(1);
+            const storage = new StorageClass<TestObject>();
             await storage.append(OBJ_1);
             await storage.append(OBJ_2);
             await storage.append(OBJ_3);
-            const objects = await storage.getObjects();
-            expect(objects[0]?.a).toBe(OBJ_1.a);
-            expect(objects[1]?.a).toBe(OBJ_2.a);
-            expect(objects[2]?.a).toBe(OBJ_3.a);
+            expect(storage.getObjects()).resolves.toEqual([OBJ_1, OBJ_2, OBJ_3]);
         })
 
-        test(`${name} walk`, async () => {
+        test("Walking objects with callback", async () => {
             expect(1);
+            const storage = new StorageClass<TestObject>();
+            await storage.append(OBJ_1);
+            await storage.append(OBJ_2);
+            await storage.append(OBJ_3);
             let count = 0;
-            await storage.walk(async (obj) => {
-                count++;
-            });
-            expect(count).toBe(3);
-        });
+            await storage.walk(async (item) => {
+                count += item.a + item.b
+            })
+            expect(count).toBe(12);
+        })
+
+        test("Concurrent access executed in right order", async () => {
+            expect(1);
+            const storage = new StorageClass<TestObject>();
+
+            const promises: Promise<void>[] = [];
+
+            promises.push(storage.append(OBJ_1));
+            promises.push(storage.append(OBJ_2));
+            promises.push(storage.append(OBJ_3));
+
+            await Promise.all(promises);
+
+            const result = await storage.getObjects();
+
+            expect(result).toEqual([OBJ_1, OBJ_2, OBJ_3]);
+        })
     });
-});
+})

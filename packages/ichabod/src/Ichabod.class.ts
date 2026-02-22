@@ -4,7 +4,8 @@ import { TrailStorage } from "./trailStorage";
 export default class Ichabod {
     private state: Map<string, WithId> = new Map<string, WithId>();
 
-    private constructor(private trailStorage: TrailStorage<Event>) { }
+    private constructor(private trailStorage: TrailStorage<Event>) {
+    }
 
     public static async getInstance(trailStorage: TrailStorage<Event>): Promise<Ichabod> {
         const ichabod = new Ichabod(trailStorage);

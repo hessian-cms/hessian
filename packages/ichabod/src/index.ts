@@ -1,7 +1,8 @@
-export * from "./trailStorage";
-export * from "./errors";
-export * from "./models";
-export * from "./helpers";
 import Ichabod from "./Ichabod.class";
+
+export * from "./errors";
+export * from "./helpers";
+export * from "./models";
+export * from "./trailStorage";
 
 export default Ichabod;

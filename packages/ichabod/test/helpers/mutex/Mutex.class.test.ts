@@ -1,13 +1,6 @@
-import { Mutex, Mutex2 } from "../src/helpers";
+import { executeAfterTime, Mutex, Mutex2 } from "../../../src";
 
 const expectedResults: number[] = [1, 2, 3];
-
-const executeAfterTime = (time: number, func: () => void) => {
-    return new Promise<void>(resolve => setTimeout(() => {
-        func();
-        resolve();
-    }, time));
-}
 
 [Mutex, Mutex2].forEach((MutexClass) => {
     const mutex = new MutexClass();
