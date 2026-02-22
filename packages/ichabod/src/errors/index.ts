@@ -1,1 +1,1 @@
-export * from './PathwayError.error';
+export * from './IchabodError.error';
