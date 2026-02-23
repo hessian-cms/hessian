@@ -6,7 +6,9 @@ import { AsyncObjectCallback } from "./AsyncObjectCallback.type";
  */
 export abstract class TrailStorage<T> {
     constructor(private mutex = new Mutex2()) {
+        // Lock the methods to ensure thread safety when accessing the trail storage.
         this.append = this.mutex.lock(this.append.bind(this));
+        // Lock the getObjects method to ensure thread safety when retrieving objects from the trail storage.
         this.getObjects = this.mutex.lock(this.getObjects.bind(this));
     }
     /**
