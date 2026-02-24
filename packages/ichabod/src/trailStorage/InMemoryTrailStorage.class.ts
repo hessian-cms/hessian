@@ -1,11 +1,14 @@
+import { IchabodError } from "../errors";
+import { InMemoryTrailStorageMeta } from "./meta";
 import { TrailStorage } from "./TrailStorage.abstract.class";
 
 /**
  * InMemoryTrailStorage is a simple implementation of TrailStorage that stores objects in memory.
  */
 export class InMemoryTrailStorage<T> extends TrailStorage<T> {
-    // The storage array that holds the objects in memory.
-    private storage = new Array<T>();
+    constructor(private storage: T[] = []) {
+        super();
+    }
 
     /**
      * Appends an object to the in-memory storage.
@@ -22,6 +25,23 @@ export class InMemoryTrailStorage<T> extends TrailStorage<T> {
      * @returns 
      */
     async getObjects(): Promise<T[]> {
-        return this.storage;
+        return JSON.parse(JSON.stringify(this.storage));
+    }
+
+    /**
+     * Retrieves metadata about the in-memory trail storage.
+     * @returns 
+     */
+    async getMeta(): Promise<InMemoryTrailStorageMeta> {
+        return {
+            createdAt: new Date()
+        }
+    }
+
+    /**
+     * Not implemented for in-memory storage, as it does not support snapshotting. Throws an error if called.
+     */
+    async createSnapshot(): Promise<string> {
+        throw new IchabodError("Snapshot creation is not supported for InMemoryTrailStorage.");
     }
 }

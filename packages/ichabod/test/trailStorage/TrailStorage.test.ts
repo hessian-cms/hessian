@@ -1,4 +1,4 @@
-import { InMemoryTrailStorage } from "../../src";
+import { IchabodError, InMemoryTrailStorage } from "../../src";
 
 interface TestObject {
     a: number;
@@ -8,6 +8,8 @@ interface TestObject {
 const OBJ_1 = { a: 1, b: 1 };
 const OBJ_2 = { a: 2, b: 2 };
 const OBJ_3 = { a: 3, b: 3 };
+
+const TRAIL_STORAGE_NOT_SUPPORTING_SNAPSHOT = [InMemoryTrailStorage];
 
 [InMemoryTrailStorage].forEach((StorageClass) => {
     describe(`TrailStorage (${StorageClass.name}) tests`, () => {
@@ -49,5 +51,27 @@ const OBJ_3 = { a: 3, b: 3 };
 
             expect(result).toEqual([OBJ_1, OBJ_2, OBJ_3]);
         })
+
+        test("getMeta returns a valid metadata object", async () => {
+            expect(1);
+            const storage = new StorageClass<TestObject>([OBJ_1, OBJ_2, OBJ_3]);
+            const createdAt = (await storage.getMeta()).createdAt;
+            const now = Date.now();
+            expect(createdAt.getTime()).toBeLessThanOrEqual(now);
+        });
+
+        if (TRAIL_STORAGE_NOT_SUPPORTING_SNAPSHOT.includes(StorageClass)) {
+            test("createSnapshot should throw error for InMemoryTrailStorage", async () => {
+                expect(1);
+                const storage = new StorageClass<TestObject>();
+                expect(storage.createSnapshot()).rejects.toBeInstanceOf(IchabodError);
+            });
+
+            test("", () => {
+                expect(1);
+                const storage = new StorageClass<TestObject>([OBJ_1, OBJ_2, OBJ_3]);
+                expect(storage.getObjects()).resolves.toEqual([OBJ_1, OBJ_2, OBJ_3]);
+            })
+        }
     });
 })
