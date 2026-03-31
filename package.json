@@ -12,6 +12,7 @@
   "scripts": {
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest watch --coverage",
     "build": "npm run --workspaces --if-present build"
   },
   "devDependencies": {
