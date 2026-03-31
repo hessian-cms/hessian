@@ -10,8 +10,8 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "vitest run --coverage",
-    "test:coverage": "npm run --workspaces --if-present test:coverage",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "build": "npm run --workspaces --if-present build"
   },
   "devDependencies": {
