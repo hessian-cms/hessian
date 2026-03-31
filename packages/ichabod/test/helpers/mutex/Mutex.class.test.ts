@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { executeAfterTime, Mutex, Mutex2 } from "../../../src";
 
 const expectedResults: number[] = [1, 2, 3];

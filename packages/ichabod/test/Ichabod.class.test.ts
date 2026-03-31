@@ -1,5 +1,6 @@
 import Ichabod, { Event, InMemoryTrailStorage } from "../src";
 import { STORAGE_DATA } from "./data/storage.data";
+import { describe, expect, test } from "vitest";
 
 describe("Ichabod class tests", () => {
     test(`Ichabod state build with InMemoryTrailStorage`, async () => {

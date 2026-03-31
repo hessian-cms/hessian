@@ -15,21 +15,21 @@ export default class Ichabod {
     private async build(): Promise<void> {
         await this.trailStorage.walk(async (evnt: Event) => {
             if (evnt.create) {
-                evnt.create.forEach(item => {
+                evnt.create.forEach((item: any) => {
                     if (!this.state.has(item.id)) {
                         this.state.set(item.id, { ...item });
                     }
                 });
             }
             if (evnt.update) {
-                evnt.update?.forEach(item => {
+                evnt.update?.forEach((item: any) => {
                     if (this.state.has(item.id)) {
                         this.state.set(item.id, { ...item })
                     }
                 });
             }
             if (evnt.delete) {
-                evnt.delete?.forEach(id => {
+                evnt.delete?.forEach((id: string) => {
                     this.state.delete(id);
                 })
             };

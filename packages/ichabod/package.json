@@ -13,8 +13,7 @@
   "author": "no4any",
   "license": "MIT",
   "devDependencies": {
-    "@hessian-cms/jest-config": "^1.0.0",
-    "@hessian-cms/ts-config": "^1.0.0"
+    "@hessian-cms/ts-config": "*"
   },
   "dependencies": {
     "zod": "^4.1.13"

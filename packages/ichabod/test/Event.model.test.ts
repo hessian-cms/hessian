@@ -1,5 +1,6 @@
 import { ZodError } from "zod";
 import { Event } from "../src";
+import { describe, expect, test } from "vitest";
 
 const NON_MATCHING_EVENT = {
     id: 1
@@ -44,14 +45,12 @@ const MATCHING_EVENT_3: Event = {
 
 describe("Test Event model", () => {
     test("Test matching event", async () => {
-        expect(3);
-        expect(Event.parseAsync(MATCHING_EVENT_1)).resolves.toEqual(MATCHING_EVENT_1);
-        expect(Event.parseAsync(MATCHING_EVENT_2)).resolves.toEqual(MATCHING_EVENT_2);
-        expect(Event.parseAsync(MATCHING_EVENT_3)).resolves.toEqual(MATCHING_EVENT_3);
+        await expect(Event.parseAsync(MATCHING_EVENT_1)).resolves.toEqual(MATCHING_EVENT_1);
+        await expect(Event.parseAsync(MATCHING_EVENT_2)).resolves.toEqual(MATCHING_EVENT_2);
+        await expect(Event.parseAsync(MATCHING_EVENT_3)).resolves.toEqual(MATCHING_EVENT_3);
     })
 
     test("Test non matching event", async () => {
-        expect(1);
-        expect(Event.parseAsync(NON_MATCHING_EVENT)).rejects.toBeInstanceOf(ZodError);
+        await expect(Event.parseAsync(NON_MATCHING_EVENT)).rejects.toBeInstanceOf(ZodError);
     })
 })

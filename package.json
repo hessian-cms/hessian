@@ -10,8 +10,12 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "npm run --workspaces --if-present test",
+    "test": "vitest run --coverage",
     "test:coverage": "npm run --workspaces --if-present test:coverage",
     "build": "npm run --workspaces --if-present build"
-   }
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.2",
+    "vitest": "^4.1.2"
+  }
 }
