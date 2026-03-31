@@ -6,8 +6,7 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "config/*",
-    "packages/*"
+    "packages/*/*"
   ],
   "scripts": {
     "test": "vitest run",
