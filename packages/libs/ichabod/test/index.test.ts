@@ -1,10 +1,14 @@
 import { describe, expect, test } from "vitest";
 
+async function add(a: number, b: number) {
+    return a + b;
+}
+
 /**
  * Initial test file for ichabod package
  */
-describe("", () => {
-    test("1+1=2", () => {
-        expect(1+1).toBe(2);
+describe("Index tests", () => {
+    test("1+1=2", async () => {
+        await expect(add(1,1)).resolves.toEqual(2);
     })
 })

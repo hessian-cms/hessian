@@ -31,7 +31,7 @@ const TRAIL_STORAGE_NOT_SUPPORTING_SNAPSHOT = [InMemoryTrailStorage];
             await storage.walk(async (item) => {
                 count += item.a + item.b
             })
-            await expect(count).toBe(12);
+            expect(count).toBe(12);
         })
 
         test("Concurrent access executed in right order", async () => {
@@ -47,14 +47,14 @@ const TRAIL_STORAGE_NOT_SUPPORTING_SNAPSHOT = [InMemoryTrailStorage];
 
             const result = await storage.getObjects();
 
-            await expect(result).toEqual([OBJ_1, OBJ_2, OBJ_3]);
+            expect(result).toEqual([OBJ_1, OBJ_2, OBJ_3]);
         })
 
         test("getMeta returns a valid metadata object", async () => {
             const storage = new StorageClass<TestObject>([OBJ_1, OBJ_2, OBJ_3]);
             const createdAt = (await storage.getMeta()).createdAt;
             const now = Date.now();
-            await expect(createdAt.getTime()).toBeLessThanOrEqual(now);
+            expect(createdAt.getTime()).toBeLessThanOrEqual(now);
         });
 
         if (TRAIL_STORAGE_NOT_SUPPORTING_SNAPSHOT.includes(StorageClass)) {

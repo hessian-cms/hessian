@@ -9,13 +9,13 @@ const expectedResults: number[] = [1, 2, 3];
 
     describe(`${MutexClass.name} class`, () => {
         test("Testing", async () => {
-            expect(1);
             const arr: number[] = [];
             const promises: Promise<void>[] = [];
             promises.push(mutexedExectuteAfterTime(500, () => { arr.push(1); }));
             promises.push(mutexedExectuteAfterTime(250, () => { arr.push(2); }));
             promises.push(mutexedExectuteAfterTime(125, () => { arr.push(3); }));
-            await Promise.all(promises);
+            
+            await expect(Promise.all(promises)).resolves.toEqual([undefined, undefined, undefined]);
             expect(arr).toEqual(expectedResults);
         });
     });
