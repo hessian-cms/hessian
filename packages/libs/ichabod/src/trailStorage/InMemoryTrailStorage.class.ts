@@ -6,7 +6,7 @@ import { TrailStorage } from "./TrailStorage.abstract.class";
  * InMemoryTrailStorage is a simple implementation of TrailStorage that stores objects in memory.
  */
 export class InMemoryTrailStorage<T> extends TrailStorage<T> {
-    constructor(private storage: T[] = []) {
+    constructor(private storage: T[] = [], private createdAt: Date = new Date()) {
         super();
     }
 
@@ -34,7 +34,7 @@ export class InMemoryTrailStorage<T> extends TrailStorage<T> {
      */
     async getMeta(): Promise<InMemoryTrailStorageMeta> {
         return {
-            createdAt: new Date()
+            createdAt: this.createdAt
         }
     }
 
