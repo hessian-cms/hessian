@@ -1,0 +1,8 @@
+{
+  "extends": "@hessian-cms/ts-config/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "include": ["src"]
+}

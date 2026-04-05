@@ -1,0 +1,21 @@
+{
+  "name": "@hessian-cms/ichabod",
+  "version": "1.0.0",
+  "description": "A event sourcing library for tracking audit trail",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.prod.json",
+    "test": "jest --coverage",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "no4any",
+  "license": "MIT",
+  "devDependencies": {
+    "@hessian-cms/ts-config": "*"
+  },
+  "dependencies": {
+    "zod": "^4.1.13"
+  }
+}

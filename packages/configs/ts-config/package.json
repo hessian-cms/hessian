@@ -1,0 +1,14 @@
+{
+  "name": "@hessian-cms/ts-config",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "",
+  "exports": {
+    "./tsconfig.json": "./tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
+  }
+}

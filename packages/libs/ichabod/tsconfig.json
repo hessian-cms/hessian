@@ -1,0 +1,3 @@
+{
+  "extends": "@hessian-cms/ts-config/tsconfig.json"
+}
