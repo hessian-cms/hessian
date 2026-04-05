@@ -1,3 +1,4 @@
+import { ZodObject } from "zod";
 import { Mutex2 } from "./helpers";
 import { Event, WithId } from "./models";
 import { InMemoryTrailStorage, TrailStorage } from "./trailStorage";
@@ -7,9 +8,9 @@ export default class Ichabod<T extends Event> {
 
     private state: Map<string, WithId> = new Map<string, WithId>();
 
-    private constructor(private trailStorage: TrailStorage<T>) {
-        this.findOne = this.mutex.lock(this.findOne.bind(this));
-        this.find = this.mutex.lock(this.find.bind(this));
+    private constructor(private trailStorage: TrailStorage<T> = new InMemoryTrailStorage<T>()) {
+        // this.findOne = this.mutex.lock(this.findOne.bind(this));
+        // this.find = this.mutex.lock(this.find.bind(this));
         this.deleteOne = this.mutex.lock(this.deleteOne.bind(this));
         this.delete = this.mutex.lock(this.delete.bind(this));
         this.updateOne = this.mutex.lock(this.updateOne.bind(this));
@@ -24,7 +25,7 @@ export default class Ichabod<T extends Event> {
     }
 
     private async build(): Promise<void> {
-        await this.trailStorage.walk(async (evnt: Event) => {
+        await this.trailStorage.walk(async (evnt: T) => {
             if (evnt.create) {
                 evnt.create.forEach((item: any) => {
                     if (!this.state.has(item.id)) {
@@ -60,6 +61,18 @@ export default class Ichabod<T extends Event> {
     public async update() {}
 
     public async insert() {}
+
+    public async modelAdd(modelId: string, model: ZodObject | string) {}
+
+    public async modelUpdate(modelId: string, model: ZodObject | string, prepareData: (item: unknown) => Promise<void>) {}
+
+    public async modelDelete(modelId: string) {}
+
+    public async getModel(modelId: string) {}
+
+    public async getModels() {
+
+    }
 
     public async getState() {
         return this.state;
